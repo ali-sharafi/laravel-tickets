@@ -1,0 +1,21 @@
+{
+    "name": "ali/laravel-tickets",
+    "description": "Laravel Support Ticketing Package",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "LaravelTickets\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ali Sharafi",
+            "email": "a.sharafi1993@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "illuminate/support": "7.24.0"
+    }
+}
