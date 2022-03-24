@@ -16,7 +16,6 @@ class CreateTicketsTable extends Migration
         Schema::create(config('laravel-tickets.database.tickets-table'), function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('opener_id')->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->unsignedBigInteger('label_id')->nullable();
             $table->string('subject');
@@ -25,8 +24,6 @@ class CreateTicketsTable extends Migration
             $table->timestamps();
 
             if (!config('laravel-tickets.models.uuid')) {
-                $table->foreign('opener_id')
-                    ->on(config('laravel-tickets.database.users-table'))->references('id');
                 $table->foreign('user_id')
                     ->on(config('laravel-tickets.database.users-table'))->references('id');
                 $table->foreign('category_id')
