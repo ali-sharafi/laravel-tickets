@@ -2,8 +2,8 @@
 
 namespace LaravelTickets\Http\Controllers;
 
-use App\Http\Controllers\Page\PageController;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
 use LaravelTickets\Contract\TicketInterface;
 use LaravelTickets\Models\Ticket;
@@ -11,13 +11,12 @@ use LaravelTickets\Models\TicketCategory;
 use LaravelTickets\Models\TicketMessage;
 use LaravelTickets\Models\TicketUpload;
 
-class TicketController extends PageController
+class TicketController
 {
     protected $request;
 
     public function __construct(Request $request)
     {
-        parent::__construct();
         $this->request = $request;
     }
 
@@ -33,7 +32,7 @@ class TicketController extends PageController
         $tickets = $this->request->user()->tickets();
         $tickets = $tickets->with('user')->orderBy('id', 'desc')->paginate(10);
 
-        return $this->showPage('laravel-tickets::index', ['tickets' => $tickets]);
+        return $this->sendResponse(compact('tickets'), 'laravel-tickets::index');
     }
 
     /**
@@ -44,7 +43,8 @@ class TicketController extends PageController
     public function create()
     {
         $categories = TicketCategory::all();
-        return $this->showPage('laravel-tickets::create', ['categories' => $categories]);
+
+        return $this->sendResponse(compact('categories'), 'laravel-tickets::create');
     }
 
     /**
@@ -58,7 +58,10 @@ class TicketController extends PageController
     {
         $data = $this->validateTicketRequest();
 
-        if ($this->isTicketCountReachMax()) return back()->with('message', trans('tickets.reach_max_open_tickets'));
+        if ($this->isTicketCountReachMax())
+            return $this->request->wantsJson() ?
+                $this->sendResponse(['message' => trans('tickets.reach_max_open_tickets')], Response::HTTP_UNPROCESSABLE_ENTITY) :
+                back()->with('message', trans('tickets.reach_max_open_tickets'));
 
         $ticket = $this->request->user()->tickets()->create($data);
 
@@ -70,6 +73,7 @@ class TicketController extends PageController
 
         $this->handleFiles($data['files'] ?? [], $ticketMessage);
 
+        if ($this->request->wantsJson()) return $this->index();
         return redirect(route('tickets.show', compact('ticket')))->with('message', trans('tickets.ticket_created_successfully'));
     }
 
@@ -82,15 +86,15 @@ class TicketController extends PageController
      */
     public function show(Ticket $ticket)
     {
-        if (!$ticket->user()->get()->contains(\request()->user()))
+        if (!$ticket->user()->get()->contains($this->request->user()))
             return abort(403);
 
         $messages = $ticket->messages()->with(['user', 'uploads'])->orderBy('created_at', 'desc');
 
-        return $this->showPage('laravel-tickets::show', compact(
+        return $this->sendResponse(compact(
             'ticket',
             'messages'
-        ));
+        ), Response::HTTP_OK, 'laravel-tickets::show');
     }
 
     /**
@@ -104,13 +108,15 @@ class TicketController extends PageController
      */
     public function message(Ticket $ticket)
     {
-        if (!$ticket->user()->get()->contains(\request()->user())) {
+        if (!$ticket->user()->get()->contains($this->request->user())) {
             return abort(403);
         }
 
         $data  = $this->validateMessageRequest();
 
         if (!config('laravel-tickets.open-ticket-with-answer') && $ticket->state === 'CLOSED') {
+            if ($this->request->wantsJson())
+                return $this->sendResponse(['message' => trans('tickets.can_not_reply_to_closed_ticket')]);
             return back()->with('message', trans('tickets.can_not_reply_to_closed_ticket'));
         }
 
@@ -124,11 +130,11 @@ class TicketController extends PageController
 
         $ticket->update(['state' => 'OPEN']);
 
-        $message = trans('tickets.message_sent_successfully');
-        return  back()->with(
-            'message',
-            $message
-        );
+        if (!$this->request->wantsJson())
+            return  back()->with(
+                'message',
+                trans('tickets.message_sent_successfully')
+            );
     }
 
     /**
@@ -146,6 +152,8 @@ class TicketController extends PageController
 
         if ($ticket->state === 'CLOSED') {
             $message = trans('tickets.ticket_already_closed');
+            if ($this->request->wantsJson())
+                return $this->sendResponse(['message' => $message], Response::HTTP_UNPROCESSABLE_ENTITY);
             return back()->with(
                 'message',
                 $message
@@ -154,11 +162,11 @@ class TicketController extends PageController
 
         $ticket->update(['state' => 'CLOSED']);
 
-        $message = trans('tickets.ticket_closed_successfully');
-        return back()->with(
-            'message',
-            $message
-        );
+        if (!$this->request->wantsJson())
+            return back()->with(
+                'message',
+                trans('tickets.ticket_closed_successfully')
+            );
     }
 
     /**
@@ -172,7 +180,7 @@ class TicketController extends PageController
      */
     public function download(Ticket $ticket, TicketUpload $ticketUpload)
     {
-        if (!$ticket->user()->get()->contains(\request()->user())) {
+        if (!$ticket->user()->get()->contains($this->request->user())) {
             return abort(403);
         }
 
@@ -250,5 +258,20 @@ class TicketController extends PageController
         }
 
         return $this->request->validate($rules);
+    }
+
+    /**
+     * Return response depends on request type
+     * 
+     * @var $data
+     * @var $page
+     * 
+     * @return Json|View
+     */
+    private function sendResponse($data, $status = 200, $page = null)
+    {
+        if ($this->request->wantsJson())
+            return response(['data' => $data], $status);
+        return view($page, $data);
     }
 }
