@@ -8,6 +8,11 @@
             "LaravelTickets\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "LaravelTickets\\Tests\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "Ali Sharafi",
@@ -17,5 +22,9 @@
     "require": {
         "php": "^7.4",
         "illuminate/support": "7.24.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.0",
+        "orchestra/testbench": "^5.12"
     }
 }
