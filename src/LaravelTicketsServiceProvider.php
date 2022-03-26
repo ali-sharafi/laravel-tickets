@@ -23,6 +23,7 @@ class LaravelTicketsServiceProvider extends ServiceProvider
          */
         $this->loadViewsFrom(__DIR__ . '/views', 'laravel-tickets');
         $this->loadMigrationsFrom(__DIR__ . '/migrations');
+        $this->loadFactoriesFrom(__DIR__ . '/factories');
 
         $this->observers();
     }
