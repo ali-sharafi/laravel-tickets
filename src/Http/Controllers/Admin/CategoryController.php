@@ -2,9 +2,7 @@
 
 namespace LaravelTickets\Http\Controllers\Admin;
 
-use App\Models\Language;
 use LaravelTickets\Models\TicketCategory;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use LaravelTickets\Http\Controllers\BaseController;
 
@@ -18,49 +16,77 @@ class CategoryController extends BaseController
     public function index()
     {
         $items = TicketCategory::all();
-        $languages = Language::all();
-        $items = $items->map(function ($i) use ($languages) {
-            $item = [
-                'id' => $i->id,
-            ];
-            foreach ($languages as $language) {
-                $item['title_' . $language->locale] = __trans('ticket_departments', $i->translation . '_title', $language->locale, ' ');
-                $item['desc_' . $language->locale] = __trans('ticket_departments', $i->translation . '_desc', $language->locale, ' ');
-            }
-            return $item;
-        });
-        return $this->responseSuccess(['items' => $items,]);
+        return $this->responseSuccess($items);
     }
 
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        $fields = [
-            'title_en' => 'required|string|max:250',
-            'desc_en' => 'required|string|max:250',
-        ];
-        $validator = Validator::make($request->only(array_keys($fields)), $fields);
+        $validator = $this->validateCategoryRequest();
         if ($validator->fails()) {
             return $this->responseError($validator->errors()->first());
         }
 
-        if ($request->get('id')) {
-            $item = TicketCategory::find($request->get('id'));
-        } else {
-            $item = new TicketCategory();
-            $item->translation = str_replace(' ', '_', strtolower($request->get('title_en')));
-        }
+        $item = new TicketCategory();
+        $item->title = str_replace(' ', '_', strtolower($this->request->get('title')));
+        $item->desc = $this->request->get('desc');
+
         $item->save();
-        foreach (Language::all() as $language) {
-            translateService()->updateTranslation('ticket_departments', [['item' => $item->translation . '_title', 'text' => $request->get('title_' . $language->locale)]], $language->locale);
-            translateService()->updateTranslation('ticket_departments', [['item' => $item->translation . '_desc', 'text' => $request->get('desc_' . $language->locale)]], $language->locale);
-        }
+
         return $this->responseSuccess();
+    }
+
+    /**
+     * Update a category
+     * @param \LaravelTickets\Models\TicketCategory $ticket_category
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function update(TicketCategory $ticket_category)
+    {
+        $validator = $this->validateCategoryRequest();
+        if ($validator->fails()) {
+            return $this->responseError($validator->errors()->first());
+        }
+
+        $ticket_category->title = str_replace(' ', '_', strtolower($this->request->get('title')));
+        $ticket_category->desc = $this->request->get('desc');
+
+        $ticket_category->save();
+
+        return $this->responseSuccess();
+    }
+
+    /**
+     * Destroy a category
+     * @param \LaravelTickets\Models\TicketCategory $ticket_category
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(TicketCategory $ticket_category)
+    {
+        $ticket_category->delete();
+
+        return $this->responseSuccess();
+    }
+
+    /**
+     * Validate input request
+     * 
+     * @return \Illuminate\Support\Facades\Validator
+     */
+    private function validateCategoryRequest()
+    {
+        $fields = [
+            'title' => 'required|string|max:250',
+            'desc' => 'required|string|max:250',
+        ];
+
+        return Validator::make($this->request->only(array_keys($fields)), $fields);
     }
 }
