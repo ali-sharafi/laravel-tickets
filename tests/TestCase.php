@@ -2,6 +2,7 @@
 
 namespace LaravelTickets\Tests;
 
+use LaravelTickets\LaravelTickets;
 use LaravelTickets\LaravelTicketsServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
@@ -14,6 +15,9 @@ class TestCase extends BaseTestCase
             'migrate',
             ['--database' => 'testbench']
         )->run();
+
+        LaravelTickets::api();
+        LaravelTickets::routes();
     }
 
     protected function getPackageProviders($app)
