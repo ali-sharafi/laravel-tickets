@@ -15,7 +15,8 @@ class CreateTicketCategoriesTable extends Migration
     {
         Schema::create(config('laravel-tickets.database.ticket-categories-table'), function (Blueprint $table) {
             $table->id();
-            $table->string('translation');
+            $table->string('title');
+            $table->string('desc')->nullable();
             $table->timestamps();
         });
     }
