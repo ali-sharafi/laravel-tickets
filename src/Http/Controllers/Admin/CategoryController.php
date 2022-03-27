@@ -43,34 +43,34 @@ class CategoryController extends BaseController
 
     /**
      * Update a category
-     * @param \LaravelTickets\Models\TicketCategory $ticket_category
+     * @param \LaravelTickets\Models\TicketCategory $category
      * 
      * @return \Illuminate\Http\Response
      */
-    public function update(TicketCategory $ticket_category)
+    public function update(TicketCategory $category)
     {
         $validator = $this->validateCategoryRequest();
         if ($validator->fails()) {
             return $this->responseError($validator->errors()->first());
         }
 
-        $ticket_category->title = str_replace(' ', '_', strtolower($this->request->get('title')));
-        $ticket_category->desc = $this->request->get('desc');
+        $category->title = str_replace(' ', '_', strtolower($this->request->get('title')));
+        $category->desc = $this->request->get('desc');
 
-        $ticket_category->save();
+        $category->save();
 
         return $this->responseSuccess();
     }
 
     /**
      * Destroy a category
-     * @param \LaravelTickets\Models\TicketCategory $ticket_category
+     * @param \LaravelTickets\Models\TicketCategory $category
      * 
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TicketCategory $ticket_category)
+    public function destroy(TicketCategory $category)
     {
-        $ticket_category->delete();
+        $category->delete();
 
         return $this->responseSuccess();
     }
