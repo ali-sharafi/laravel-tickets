@@ -53,6 +53,6 @@ class CategoryControllerTest extends TestCase
             ->assertStatus(200)
             ->assertJson(['status' => 'success']);
 
-        $this->assertDatabaseMissing('ticket_categories', $category->toArray());
+        $this->assertDatabaseCount('ticket_categories', 0);
     }
 }
