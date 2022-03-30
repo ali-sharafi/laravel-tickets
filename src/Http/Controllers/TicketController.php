@@ -50,7 +50,7 @@ class TicketController
     /**
      * Create a new ticket
      *
-     * @return View|RedirectResponse
+     * @return View|RedirectResponse|Response
      * @link Ticket
      *
      */
@@ -74,6 +74,7 @@ class TicketController
         $this->handleFiles($data['files'] ?? [], $ticketMessage);
 
         if ($this->request->wantsJson()) return $this->index();
+
         return redirect(route('tickets.show', compact('ticket')))->with('message', trans('tickets.ticket_created_successfully'));
     }
 
@@ -224,7 +225,11 @@ class TicketController
     private function validateMessageRequest()
     {
         return $this->request->validate([
-            'message' => ['required', 'string', 'profanity', Rule::unique(config('laravel-tickets.database.ticket-messages-table'))->where('user_id', $this->request->user()->id)],
+            'message' => [
+                'required', 'string',
+                Rule::unique(config('laravel-tickets.database.ticket-messages-table'))
+                    ->where('user_id', $this->request->user()->id)
+            ],
             'files' => ['max:' . config('laravel-tickets.file.max-files')],
             'files.*' => [
                 'sometimes',
@@ -238,9 +243,9 @@ class TicketController
     private function validateTicketRequest()
     {
         $rules = [
-            'subject' => ['required', 'string', 'max:191', 'profanity'],
+            'subject' => ['required', 'string', 'max:191'],
             'priority' => ['required', Rule::in(config('laravel-tickets.priorities'))],
-            'message' => ['required', 'string', 'profanity'],
+            'message' => ['required', 'string'],
             'files' => ['max:' . config('laravel-tickets.file.max-files')],
             'files.*' => [
                 'sometimes',
