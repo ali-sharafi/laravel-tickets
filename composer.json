@@ -26,5 +26,12 @@
     "require-dev": {
         "phpunit/phpunit": "^8.0",
         "orchestra/testbench": "^5.12"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "LaravelTickets\\ServiceProvider"
+            ]
+        }
     }
 }
