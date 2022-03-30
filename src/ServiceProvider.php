@@ -2,7 +2,7 @@
 
 namespace LaravelTickets;
 
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use LaravelTickets\LaravelTickets;
 use LaravelTickets\Models\Ticket;
 use LaravelTickets\Models\TicketMessage;
@@ -11,7 +11,7 @@ use LaravelTickets\Observers\TicketMessageObserver;
 use LaravelTickets\Observers\TicketObserver;
 use LaravelTickets\Observers\TicketUploadObserver;
 
-class LaravelTicketsServiceProvider extends ServiceProvider
+class ServiceProvider extends BaseServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -26,6 +26,11 @@ class LaravelTicketsServiceProvider extends ServiceProvider
         $this->loadFactoriesFrom(__DIR__ . '/factories');
 
         $this->observers();
+
+        $this->publishes([
+            __DIR__ . '/config/config.php' => config_path('tickets.php'),
+            __DIR__ . '/migrations' => database_path('migrations')
+        ]);
     }
 
 
