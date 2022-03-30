@@ -26,5 +26,4 @@ trait HasTickets
     {
         return $this->hasMany(Ticket::class);
     }
-
 }
