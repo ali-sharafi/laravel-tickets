@@ -3,7 +3,7 @@
 namespace LaravelTickets\Tests;
 
 use LaravelTickets\LaravelTickets;
-use LaravelTickets\LaravelTicketsServiceProvider;
+use LaravelTickets\ServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
 class TestCase extends BaseTestCase
@@ -22,7 +22,7 @@ class TestCase extends BaseTestCase
 
     protected function getPackageProviders($app)
     {
-        return [LaravelTicketsServiceProvider::class];
+        return [ServiceProvider::class];
     }
 
     protected function getEnvironmentSetUp($app)
