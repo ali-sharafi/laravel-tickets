@@ -68,6 +68,11 @@ return [
      * How many tickets the user can have open
      */
     'maximal-open-tickets' => 3,
+
+    /**
+     * Max request per minute to add tickets
+     */
+    'requests-throttle' => 'throttle:10,120',
     /*
      * How many days after last message sent, the ticket gets as closed declared
      * Use 0 for disabling this feature
