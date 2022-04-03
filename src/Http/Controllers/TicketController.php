@@ -32,7 +32,7 @@ class TicketController
         $tickets = $this->request->user()->tickets();
         $tickets = $tickets->with('user')->orderBy('id', 'desc')->paginate(10);
 
-        return $this->sendResponse(compact('tickets'), 'laravel-tickets::index');
+        return $this->sendResponse(compact('tickets'), Response::HTTP_OK, 'laravel-tickets::index');
     }
 
     /**
@@ -44,7 +44,7 @@ class TicketController
     {
         $categories = TicketCategory::all();
 
-        return $this->sendResponse(compact('categories'), 'laravel-tickets::create');
+        return $this->sendResponse(compact('categories'), Response::HTTP_OK, 'laravel-tickets::create');
     }
 
     /**
