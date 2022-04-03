@@ -8,9 +8,9 @@ use LaravelTickets\Models\TicketCategory;
 
 $factory->define(Ticket::class, function (Faker $faker) {
     return [
-        'subject' => $faker->text,
+        'subject' => $faker->title,
         'priority' => $faker->randomElement(config('laravel-tickets.priorities')),
-        'message' => $faker->text,
+        'message' => $faker->sentence,
         'files' => $faker->image(),
         'category_id' => factory(TicketCategory::class)->create()->id
     ];
