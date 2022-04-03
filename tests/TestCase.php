@@ -16,7 +16,7 @@ class TestCase extends BaseTestCase
             ['--database' => 'testbench']
         )->run();
 
-        LaravelTickets::api(['middleware' => 'bindings']);
+        LaravelTickets::api();
         LaravelTickets::routes();
     }
 

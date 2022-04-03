@@ -10,9 +10,26 @@ use LaravelTickets\Traits\HasTickets;
 class TicketControllerTest extends TestCase
 {
     /** @test */
+    public function test_can_not_add_more_than_max()
+    {
+        $this->login();
+        for ($i = 0; $i < 3; $i++) {
+            $ticket = factory(Ticket::class)->make();
+            $this->post('/tickets', $ticket->toArray())
+                ->assertRedirect()
+                ->assertSessionHas('message', trans('tickets.ticket_created_successfully'));
+        }
+
+        $ticket = factory(Ticket::class)->make();
+
+        $this->post('/tickets', $ticket->toArray())
+            ->assertRedirect()
+            ->assertSessionHas('message', trans('tickets.reach_max_open_tickets'));
+    }
+
+    /** @test */
     public function test_can_add_new_ticket()
     {
-        $this->withoutExceptionHandling();
         $this->login();
         $ticket = factory(Ticket::class)->make();
 
@@ -22,6 +39,17 @@ class TicketControllerTest extends TestCase
 
         $this->assertDatabaseCount('tickets', 1);
     }
+
+    /** @test */
+    public function test_can_not_add_empty_ticket()
+    {
+        $this->login();
+
+        $this->post('/tickets', [])
+            ->assertRedirect()
+            ->assertSessionHasErrors();
+    }
+
 
     public function login()
     {
@@ -34,9 +62,11 @@ class TicketControllerTest extends TestCase
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
         ]);
 
-        Config::set('laravel-tickets.user',User::class);
+        Config::set('laravel-tickets.user', User::class);
 
         $this->actingAs($user);
+
+        return $user;
     }
 }
 
