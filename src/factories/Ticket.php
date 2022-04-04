@@ -10,8 +10,6 @@ $factory->define(Ticket::class, function (Faker $faker) {
     return [
         'subject' => $faker->title,
         'priority' => $faker->randomElement(config('laravel-tickets.priorities')),
-        'message' => $faker->sentence,
-        'files' => $faker->image(),
         'category_id' => factory(TicketCategory::class)->create()->id
     ];
 });
