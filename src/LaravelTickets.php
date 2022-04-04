@@ -31,7 +31,7 @@ class LaravelTickets
         };
 
         $defaultOptions = [
-            'prefix' => 'tickets',
+            'prefix' => 'api/tickets',
             'middleware' => 'bindings',
             'namespace' => '\LaravelTickets\Http\Controllers\Admin',
         ];
