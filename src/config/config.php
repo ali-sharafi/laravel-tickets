@@ -117,7 +117,7 @@ return [
     /*
      * Layout view
      */
-    'layouts' => 'layouts.main',
+    'layouts' => 'laravel-tickets::layouts.main',
     /*
      * Force pdf to preview instead to download
      */
