@@ -11,7 +11,7 @@ class LabelControllerTest extends TestCase
     {
         $label = factory(TicketLabel::class)->make()->toArray();
 
-        $this->post('/tickets/labels', $label)
+        $this->post('/api/tickets/labels', $label)
             ->assertStatus(200)
             ->assertJson(['status' => 'success', 'data' => [$label]]);
 
@@ -23,7 +23,7 @@ class LabelControllerTest extends TestCase
     {
         $label = factory(TicketLabel::class)->create()->toArray();
 
-        $this->get('/tickets/labels')
+        $this->get('/api/tickets/labels')
             ->assertStatus(200)
             ->assertJson(['status' => 'success', 'data' => [$label]]);
     }
@@ -34,7 +34,7 @@ class LabelControllerTest extends TestCase
         $label = factory(TicketLabel::class)->create();
         $updatedLabel = factory(TicketLabel::class)->make()->toArray();
 
-        $this->patch('/tickets/labels/' . $label->id, $updatedLabel)
+        $this->patch('/api/tickets/labels/' . $label->id, $updatedLabel)
             ->assertStatus(200)
             ->assertJson(['status' => 'success', 'data' => [$updatedLabel]]);
     }
@@ -44,7 +44,7 @@ class LabelControllerTest extends TestCase
     {
         $label = factory(TicketLabel::class)->create();
 
-        $this->delete('/tickets/labels/' . $label->id)
+        $this->delete('/api/tickets/labels/' . $label->id)
             ->assertStatus(200)
             ->assertJson(['status' => 'success']);
 

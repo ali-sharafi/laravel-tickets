@@ -11,7 +11,7 @@ class CategoryControllerTest extends TestCase
     {
         $category = factory(TicketCategory::class)->make()->toArray();
 
-        $this->post('/tickets/categories', $category)
+        $this->post('/api/tickets/categories', $category)
             ->assertStatus(200)
             ->assertJson(['status' => 'success']);
 
@@ -23,7 +23,7 @@ class CategoryControllerTest extends TestCase
     {
         $category = factory(TicketCategory::class)->create();
 
-        $this->get('/tickets/categories')
+        $this->get('/api/tickets/categories')
             ->assertStatus(200)
             ->assertJson(['status' => 'success', 'data' => [$category->toArray()]]);
     }
@@ -34,7 +34,7 @@ class CategoryControllerTest extends TestCase
         $category = factory(TicketCategory::class)->create();
         $updatedCategory = factory(TicketCategory::class)->make();
 
-        $this->patch('/tickets/categories/' . $category->id, $updatedCategory->toArray())
+        $this->patch('/api/tickets/categories/' . $category->id, $updatedCategory->toArray())
             ->assertStatus(200)
             ->assertJson(['status' => 'success']);
 
@@ -49,7 +49,7 @@ class CategoryControllerTest extends TestCase
     {
         $category = factory(TicketCategory::class)->create();
 
-        $this->delete('/tickets/categories/' . $category->id)
+        $this->delete('/api/tickets/categories/' . $category->id)
             ->assertStatus(200)
             ->assertJson(['status' => 'success']);
 
