@@ -39,9 +39,9 @@ return [
     'user' => App\Models\User::class,
 
     /*
-     * The user model
+     * The admin model
      */
-    'admin' => App\Models\Admin::class,
+    'admin' => App\Models\User::class,
 
     /*
      * The default guard for authentication middleware
