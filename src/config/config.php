@@ -82,7 +82,7 @@ return [
     /*
      * User can reopen a ticket with a answer
      */
-    'open-ticket-with-answer' => true,
+    'open-ticket-with-answer' => false,
 
     /*
      * Date format
