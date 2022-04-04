@@ -14,6 +14,7 @@ class LaravelTickets
 
         $defaultOptions = [
             'prefix' => 'tickets',
+            'middleware' => 'web',
             'namespace' => '\LaravelTickets\Http\Controllers',
         ];
 
