@@ -15,10 +15,6 @@
             </div>
         </div>
         <div class="card-body">
-            @includeWhen(session()->has('message'), 'laravel-tickets::alert', [
-                'message' => session()->get('message'),
-            ])
-
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead class="th">
