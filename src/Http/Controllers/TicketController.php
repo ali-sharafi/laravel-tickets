@@ -115,7 +115,7 @@ class TicketController
 
         $data  = $this->validateMessageRequest();
 
-        if (!config('laravel-tickets.open-ticket-with-answer') && $ticket->state === 'CLOSED') {
+        if (!config('laravel-tickets.open-ticket-with-answer') && $ticket->state === TicketInterface::STATE_CLOSED) {
             if ($this->request->wantsJson())
                 return $this->sendResponse(['message' => trans('tickets.can_not_reply_to_closed_ticket')]);
             return back()->with('message', trans('tickets.can_not_reply_to_closed_ticket'));
