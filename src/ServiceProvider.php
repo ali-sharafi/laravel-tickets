@@ -39,6 +39,12 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                AdminUiCommand::class
+            ]);
+        }
+
         // Automatically apply the package configuration
         $this->mergeConfigFrom(__DIR__ . '/config/config.php', 'laravel-tickets');
 
