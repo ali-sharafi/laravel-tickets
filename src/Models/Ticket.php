@@ -32,7 +32,7 @@ class Ticket extends Model
 
     public function getCategoryNameAttribute()
     {
-        return trans('ticket_departments.' . $this->category->translation . '_title');
+        return trans('ticket_categories.' . $this->category->title);
     }
 
     public function getTable()
@@ -158,11 +158,11 @@ class Ticket extends Model
      *
      * @return mixed
      */
-    public function scopeDepartment($query, $department)
+    public function scopeCategory($query, $category)
     {
-        if (empty($department))
+        if (empty($category))
             return $query;
-        return $query->where('category_id', $department);
+        return $query->where('category_id', $category);
     }
 
     /**

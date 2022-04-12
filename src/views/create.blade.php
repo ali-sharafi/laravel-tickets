@@ -22,7 +22,7 @@
                                     @foreach ($categories as $ticketCategory)
                                         <option value="{{ $ticketCategory->id }}"
                                             @if (old('category_id') === $ticketCategory->id) selected @endif>
-                                            {{ __('ticket_departments.' . $ticketCategory->translation . '_title') }}
+                                            {{ __('ticket_categories.' . $ticketCategory->title) }}
                                         </option>
                                     @endforeach
                                 </select>

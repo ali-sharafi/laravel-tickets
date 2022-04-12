@@ -13,13 +13,13 @@ class TicketController extends BaseController
     public function index()
     {
         $state = $this->request->state ?? null;
-        $department = $this->request->department ?? null;
+        $category = $this->request->category ?? null;
         $label = $this->request->label ?? null;
         $pageSize = $this->request->page_size ?? 20;
 
         return $this->responseSuccess(Ticket::with(['category', 'user', 'agent', 'label'])
             ->label($label)
-            ->department($department)
+            ->category($category)
             ->state($state)
             ->paginate($pageSize));
     }
