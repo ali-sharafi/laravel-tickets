@@ -12,6 +12,7 @@ class Vue extends Preset
     public static function install()
     {
         static::ensureComponentDirectoryExists();
+        static::updatePackages();
         static::updateComponent();
     }
 
@@ -26,5 +27,18 @@ class Vue extends Preset
         $origin =  __DIR__ . '/vue-stubs/*';
         $dest = __DIR__ . '/components/';
         shell_exec(" cp -r -a $origin $dest 2>&1 ");
+    }
+
+    /**
+     * Update the given package array.
+     *
+     * @param  array  $packages
+     * @return array
+     */
+    protected static function updatePackageArray(array $packages)
+    {
+        return [
+            "element-ui" => "^2.4.1",
+        ] + $packages;
     }
 }
