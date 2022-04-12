@@ -21,11 +21,10 @@ class Vue extends Preset
      *
      * @return void
      */
-    protected static function updateComponent()
+    public static function updateComponent()
     {
-        copy(
-            __DIR__ . '/vue-stubs/ExampleComponent.vue',
-            resource_path('js/components/ExampleComponent.vue')
-        );
+        $origin =  __DIR__ . '/vue-stubs/*';
+        $dest = __DIR__ . '/components/';
+        shell_exec(" cp -r -a $origin $dest 2>&1 ");
     }
 }
