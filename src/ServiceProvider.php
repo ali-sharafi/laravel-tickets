@@ -29,8 +29,17 @@ class ServiceProvider extends BaseServiceProvider
 
         $this->publishes([
             __DIR__ . '/config/config.php' => config_path('tickets.php'),
+        ], 'laravel-tickets:config');
+
+        // Publishing the migrations.
+        $this->publishes([
             __DIR__ . '/migrations' => database_path('migrations')
-        ]);
+        ], 'laravel-tickets:migrations');
+
+        // Publishing the views.
+        $this->publishes([
+            __DIR__ . '/views' => resource_path('views/vendor/laravel-tickets'),
+        ], 'laravel-tickets:views');
     }
 
 
