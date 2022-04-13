@@ -52,7 +52,7 @@ return [
      * Database tables name
      */
     'database' => [
-        'admins-table' => 'admins',
+        'admins-table' => 'users',
         'users-table' => 'users',
         'tickets-table' => 'tickets',
         'ticket-messages-table' => 'ticket_messages',
