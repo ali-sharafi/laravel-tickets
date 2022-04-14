@@ -89,7 +89,7 @@
                     @if (config('laravel-tickets.category') && $ticket->category()->exists())
                         <div class="form-group">
                             <label>{{ __('tickets.category') }}:</label>
-                            <strong>{{ __('ticket_categories.' . $ticket->category()->first()->title') }}</strong>
+                            <strong>{{ __('ticket_categories.' . $ticket->category()->first()->title) }}</strong>
                         </div>
                     @endif
                     <div class="form-group">
