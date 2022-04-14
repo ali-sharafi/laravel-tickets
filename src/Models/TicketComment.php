@@ -27,7 +27,7 @@ class TicketComment extends Model
 
     public function getTable()
     {
-        return config('laravel-tickets.ticket-comments-table');
+        return config('tickets.ticket-comments-table');
     }
 
     /**
@@ -47,6 +47,6 @@ class TicketComment extends Model
      */
     public function user()
     {
-        return $this->belongsTo(config('laravel-tickets.admin'));
+        return $this->belongsTo(config('tickets.admin'));
     }
 }

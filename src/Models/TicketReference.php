@@ -21,7 +21,7 @@ class TicketReference extends Model
 
     public function getTable()
     {
-        return config('laravel-tickets.ticket-references-table');
+        return config('tickets.ticket-references-table');
     }
 
     /**

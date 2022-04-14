@@ -1,4 +1,4 @@
-@extends(config('laravel-tickets.layouts'))
+@extends(config('tickets.layouts'))
 
 @section('content')
     <div class="card padding-25">

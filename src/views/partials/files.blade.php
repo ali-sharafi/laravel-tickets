@@ -11,7 +11,7 @@
                                 </div>
                                 <div class="col-12 ">
                                                 <span class="text-muted">
-                                                    {{ $message->user->name }} {{ $upload->created_at->format(config('laravel-tickets.datetime-format')) }}
+                                                    {{ $message->user->name }} {{ $upload->created_at->format(config('tickets.datetime-format')) }}
                                                 </span>
                                 </div>
                             </div>

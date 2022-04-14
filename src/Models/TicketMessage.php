@@ -46,7 +46,7 @@ class TicketMessage extends Model
 
     public function getTable()
     {
-        return config('laravel-tickets.ticket-messages-table');
+        return config('tickets.ticket-messages-table');
     }
 
     /**
@@ -66,7 +66,7 @@ class TicketMessage extends Model
      */
     public function user()
     {
-        return $this->belongsTo(config('laravel-tickets.user'));
+        return $this->belongsTo(config('tickets.user'));
     }
 
     /**
@@ -76,7 +76,7 @@ class TicketMessage extends Model
      */
     public function admin()
     {
-        return $this->belongsTo(config('laravel-tickets.admin'), 'user_id');
+        return $this->belongsTo(config('tickets.admin'), 'user_id');
     }
 
     /**

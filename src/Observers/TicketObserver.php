@@ -48,7 +48,7 @@ class TicketObserver
 
     public function creating(Ticket $ticket)
     {
-        if (config('laravel-tickets.model.uuid') && empty($model->id)) {
+        if (config('tickets.model.uuid') && empty($model->id)) {
             $ticket->id = Uuid::uuid4();
         }
     }

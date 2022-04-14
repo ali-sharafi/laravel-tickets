@@ -149,15 +149,15 @@ class TicketController extends BaseController
      */
     private function handleFiles($files, TicketMessage $ticketMessage)
     {
-        if (!config('laravel-tickets.files') || $files == null) {
+        if (!config('tickets.files') || $files == null) {
             return;
         }
         foreach ($files as $file) {
             $ticketMessage->uploads()->create([
                 'path' => $file->storeAs(
-                    config('laravel-tickets.file.path') . $ticketMessage->id,
+                    config('tickets.file.path') . $ticketMessage->id,
                     $file->getClientOriginalName(),
-                    config('laravel-tickets.file.driver')
+                    config('tickets.file.driver')
                 )
             ]);
         }
@@ -168,11 +168,11 @@ class TicketController extends BaseController
         return $this->request->validate([
             'message' => 'string',
             'comment' => 'string',
-            'files' => ['max:' . config('laravel-tickets.file.max-files')],
+            'files' => ['max:' . config('tickets.file.max-files')],
             'files.*' => [
                 'sometimes',
                 'file',
-                'max:' . config('laravel-tickets.file.size-limit')
+                'max:' . config('tickets.file.size-limit')
             ]
         ]);
     }

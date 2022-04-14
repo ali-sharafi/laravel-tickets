@@ -25,6 +25,6 @@ class TicketCategory extends Model
 
     public function getTable()
     {
-        return config('laravel-tickets.ticket-categories-table');
+        return config('tickets.ticket-categories-table');
     }
 }

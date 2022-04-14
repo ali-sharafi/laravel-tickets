@@ -11,6 +11,6 @@ class TicketUploadObserver
 
     public function deleting(TicketUpload $ticketUpload)
     {
-        Storage::disk(config('laravel-tickets.file.driver'))->delete($ticketUpload->path);
+        Storage::disk(config('tickets.file.driver'))->delete($ticketUpload->path);
     }
 }

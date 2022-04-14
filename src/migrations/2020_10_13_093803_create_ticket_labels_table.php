@@ -13,7 +13,7 @@ class CreateTicketLabelsTable extends Migration
      */
     public function up()
     {
-        Schema::create(config('laravel-tickets.ticket-labels-table'), function (Blueprint $table) {
+        Schema::create(config('tickets.ticket-labels-table'), function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('color')->default('#cccc');
@@ -28,6 +28,6 @@ class CreateTicketLabelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(config('laravel-tickets.ticket-labels-table'));
+        Schema::dropIfExists(config('tickets.ticket-labels-table'));
     }
 }

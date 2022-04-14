@@ -10,6 +10,6 @@ class TicketLabel extends Model
 
     public function getTable()
     {
-        return config('laravel-tickets.ticket-labels-table');
+        return config('tickets.ticket-labels-table');
     }
 }

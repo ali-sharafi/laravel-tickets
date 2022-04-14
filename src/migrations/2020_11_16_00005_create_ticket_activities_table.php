@@ -13,16 +13,16 @@ class CreateTicketActivitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create(config('laravel-tickets.ticket-activities-table'), function (Blueprint $table) {
+        Schema::create(config('tickets.ticket-activities-table'), function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('ticket_id');
             $table->morphs('targetable');
             $table->enum('type', [ 'CREATE', 'CLOSE', 'OPEN', 'ANSWER' ]);
             $table->timestamps();
 
-            if (! config('laravel-tickets.models.uuid')) {
+            if (! config('tickets.models.uuid')) {
                 $table->foreign('ticket_id')
-                    ->on(config('laravel-tickets.tickets-table'))->references('id');
+                    ->on(config('tickets.tickets-table'))->references('id');
             }
         });
     }
@@ -34,6 +34,6 @@ class CreateTicketActivitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(config('laravel-tickets.ticket-activities-table'));
+        Schema::dropIfExists(config('tickets.ticket-activities-table'));
     }
 }

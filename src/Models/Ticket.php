@@ -37,7 +37,7 @@ class Ticket extends Model
 
     public function getTable()
     {
-        return config('laravel-tickets.tickets-table');
+        return config('tickets.tickets-table');
     }
 
     /**
@@ -85,7 +85,7 @@ class Ticket extends Model
      */
     public function opener()
     {
-        return $this->belongsTo(config('laravel-tickets.admin'));
+        return $this->belongsTo(config('tickets.admin'));
     }
 
     /**
@@ -95,7 +95,7 @@ class Ticket extends Model
      */
     public function user()
     {
-        return $this->belongsTo(config('laravel-tickets.user'));
+        return $this->belongsTo(config('tickets.user'));
     }
 
     /**
@@ -147,7 +147,7 @@ class Ticket extends Model
      */
     public function agent()
     {
-        return $this->hasOneThrough(config('laravel-tickets.admin'), TicketMessage::class, 'ticket_id', 'id', 'id', 'user_id')->where('user_type', TicketInterface::ADMIN)->orderByDesc('ticket_messages.created_at');
+        return $this->hasOneThrough(config('tickets.admin'), TicketMessage::class, 'ticket_id', 'id', 'id', 'user_id')->where('user_type', TicketInterface::ADMIN)->orderByDesc('ticket_messages.created_at');
     }
 
     /**

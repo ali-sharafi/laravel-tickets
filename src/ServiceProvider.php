@@ -55,7 +55,7 @@ class ServiceProvider extends BaseServiceProvider
         }
 
         // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__ . '/config/config.php', 'laravel-tickets');
+        $this->mergeConfigFrom(__DIR__ . '/config/config.php', 'tickets');
 
         // Register the main class to use with the facade
         $this->app->singleton('laravel-tickets', function () {

@@ -34,7 +34,7 @@ class TicketActivity extends Model
 
     public function getTable()
     {
-        return config('laravel-tickets.ticket-activities-table');
+        return config('tickets.ticket-activities-table');
     }
 
     /**

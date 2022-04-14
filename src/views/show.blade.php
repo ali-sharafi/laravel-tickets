@@ -1,4 +1,4 @@
-@extends(config('laravel-tickets.layouts'))
+@extends(config('tickets.layouts'))
 
 @section('content')
     <div class="row">
@@ -14,14 +14,14 @@
                     </div>
                     <div class="card-body">
                         <form method="post" action="{{ route('tickets.message', compact('ticket')) }}"
-                            @if (config('laravel-tickets.files')) enctype="multipart/form-data" @endif>
+                            @if (config('tickets.files')) enctype="multipart/form-data" @endif>
                             @csrf
                             <textarea class="form-control @error('message') is-invalid @enderror" placeholder="{{ __('tickets.message') }}"
                                 name="message">{{ old('message') }}</textarea>
                             @error('message')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
-                            @if (config('laravel-tickets.files'))
+                            @if (config('tickets.files'))
                                 <div class="custom-file mt-2">
                                     <input type="file" name="files[]" multiple
                                         class="custom-file-input @error('files') is-invalid @enderror {{ empty($errors->get('files.*')) ? '' : 'is-invalid' }}"
@@ -86,7 +86,7 @@
                     {{ __('tickets.ticket_overview') }}
                 </div>
                 <div class="card-body">
-                    @if (config('laravel-tickets.category') && $ticket->category()->exists())
+                    @if (config('tickets.category') && $ticket->category()->exists())
                         <div class="form-group">
                             <label>{{ __('tickets.category') }}:</label>
                             <strong>{{ __('ticket_categories.' . $ticket->category()->first()->title) }}</strong>
@@ -114,13 +114,13 @@
             </div>
 
             <ul class="nav nav-pills mb mt-2" id="pills-tab">
-                @if (config('laravel-tickets.list.users'))
+                @if (config('tickets.list.users'))
                     <li class="nav-item">
                         <a class="nav-link" id="pills-users-tab" data-toggle="pill"
                             href="#pills-users">@lang('Users')</a>
                     </li>
                 @endif
-                @if (config('laravel-tickets.list.files'))
+                @if (config('tickets.list.files'))
                     <li class="nav-item">
                         <a class="nav-link" id="pills-files-tab" data-toggle="pill"
                             href="#pills-files">@lang('Files')</a>

@@ -115,7 +115,7 @@ class TicketController
 
         $data  = $this->validateMessageRequest();
 
-        if (!config('laravel-tickets.open-ticket-with-answer') && $ticket->state === TicketInterface::STATE_CLOSED) {
+        if (!config('tickets.open-ticket-with-answer') && $ticket->state === TicketInterface::STATE_CLOSED) {
             if ($this->request->wantsJson())
                 return $this->sendResponse(['message' => trans('tickets.can_not_reply_to_closed_ticket')]);
             return back()->with('message', trans('tickets.can_not_reply_to_closed_ticket'));
@@ -186,7 +186,7 @@ class TicketController
         }
 
         $storagePath = storage_path('app/' . $ticketUpload->path);
-        if (config('laravel-tickets.pdf-force-preview') && pathinfo($ticketUpload->path, PATHINFO_EXTENSION) === 'pdf') {
+        if (config('tickets.pdf-force-preview') && pathinfo($ticketUpload->path, PATHINFO_EXTENSION) === 'pdf') {
             return response()->file($storagePath);
         }
 
@@ -203,15 +203,15 @@ class TicketController
      */
     private function handleFiles($files, TicketMessage $ticketMessage)
     {
-        if (!config('laravel-tickets.files') || $files == null) {
+        if (!config('tickets.files') || $files == null) {
             return;
         }
         foreach ($files as $file) {
             $ticketMessage->uploads()->create([
                 'path' => $file->storeAs(
-                    config('laravel-tickets.file.path') . $ticketMessage->id,
+                    config('tickets.file.path') . $ticketMessage->id,
                     $file->getClientOriginalName(),
-                    config('laravel-tickets.file.driver')
+                    config('tickets.file.driver')
                 )
             ]);
         }
@@ -219,7 +219,7 @@ class TicketController
 
     private function isTicketCountReachMax()
     {
-        return $this->request->user()->tickets()->where('state', '!=', 'CLOSED')->count() >= config('laravel-tickets.maximal-open-tickets');
+        return $this->request->user()->tickets()->where('state', '!=', 'CLOSED')->count() >= config('tickets.maximal-open-tickets');
     }
 
     private function validateMessageRequest()
@@ -227,15 +227,15 @@ class TicketController
         return $this->request->validate([
             'message' => [
                 'required', 'string',
-                Rule::unique(config('laravel-tickets.ticket-messages-table'))
+                Rule::unique(config('tickets.ticket-messages-table'))
                     ->where('user_id', $this->request->user()->id)
             ],
-            'files' => ['max:' . config('laravel-tickets.file.max-files')],
+            'files' => ['max:' . config('tickets.file.max-files')],
             'files.*' => [
                 'sometimes',
                 'file',
-                'max:' . config('laravel-tickets.file.size-limit'),
-                'mimes:' . config('laravel-tickets.file.mimetype'),
+                'max:' . config('tickets.file.size-limit'),
+                'mimes:' . config('tickets.file.mimetype'),
             ]
         ]);
     }
@@ -244,21 +244,21 @@ class TicketController
     {
         $rules = [
             'subject' => ['required', 'string', 'max:191'],
-            'priority' => ['required', Rule::in(config('laravel-tickets.priorities'))],
+            'priority' => ['required', Rule::in(config('tickets.priorities'))],
             'message' => ['required', 'string'],
-            'files' => ['max:' . config('laravel-tickets.file.max-files')],
+            'files' => ['max:' . config('tickets.file.max-files')],
             'files.*' => [
                 'sometimes',
                 'file',
-                'max:' . config('laravel-tickets.file.size-limit'),
-                'mimes:' . config('laravel-tickets.file.mimetype'),
+                'max:' . config('tickets.file.size-limit'),
+                'mimes:' . config('tickets.file.mimetype'),
             ],
         ];
 
-        if (config('laravel-tickets.category')) {
+        if (config('tickets.category')) {
             $rules['category_id'] = [
                 'required',
-                Rule::exists(config('laravel-tickets.ticket-categories-table'), 'id'),
+                Rule::exists(config('tickets.ticket-categories-table'), 'id'),
             ];
         }
 

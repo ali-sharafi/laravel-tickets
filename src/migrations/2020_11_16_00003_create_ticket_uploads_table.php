@@ -13,15 +13,15 @@ class CreateTicketUploadsTable extends Migration
      */
     public function up()
     {
-        Schema::create(config('laravel-tickets.ticket-uploads-table'), function (Blueprint $table) {
+        Schema::create(config('tickets.ticket-uploads-table'), function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('ticket_message_id');
             $table->string('path');
             $table->timestamps();
 
-            if (! config('laravel-tickets.models.uuid')) {
+            if (! config('tickets.models.uuid')) {
                 $table->foreign('ticket_message_id')
-                    ->on(config('laravel-tickets.ticket-messages-table'))->references('id');
+                    ->on(config('tickets.ticket-messages-table'))->references('id');
             }
         });
     }
@@ -33,6 +33,6 @@ class CreateTicketUploadsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(config('laravel-tickets.ticket-uploads-table'));
+        Schema::dropIfExists(config('tickets.ticket-uploads-table'));
     }
 }

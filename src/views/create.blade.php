@@ -1,4 +1,4 @@
-@extends(config('laravel-tickets.layouts'))
+@extends(config('tickets.layouts'))
 
 @section('content')
     <div class="card padding-25">
@@ -11,10 +11,10 @@
                 'message' => session()->get('message'),
             ])
             <form method="post" action="{{ route('tickets.store') }}"
-                @if (config('laravel-tickets.files')) enctype="multipart/form-data" @endif>
+                @if (config('tickets.files')) enctype="multipart/form-data" @endif>
                 @csrf
                 <div class="row">
-                    @if (config('laravel-tickets.category'))
+                    @if (config('tickets.category'))
                         <div class="col-12">
                             <div class="form-group">
                                 <label>{{ __('tickets.category') }}</label>
@@ -36,7 +36,7 @@
                         <div class="form-group">
                             <label>{{ __('tickets.priority') }}</label>
                             <select class="form-control @error('priority') is-invalid @enderror" name="priority">
-                                @foreach (config('laravel-tickets.priorities') as $priority)
+                                @foreach (config('tickets.priorities') as $priority)
                                     <option value="{{ $priority }}" @if (old('priority') === $priority) selected @endif>
                                         {{ __('tickets.' . strtolower($priority)) }}</option>
                                 @endforeach
@@ -66,7 +66,7 @@
                             @enderror
                         </div>
                     </div>
-                    @if (config('laravel-tickets.files'))
+                    @if (config('tickets.files'))
                         <div class="col-12 mb-2">
                             <div class="custom-file">
                                 <input type="file" name="files[]" multiple

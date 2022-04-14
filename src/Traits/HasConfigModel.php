@@ -20,6 +20,6 @@ trait HasConfigModel
 
     public function isIncrementing()
     {
-        return config('laravel-tickets.model.incrementing');
+        return config('tickets.model.incrementing');
     }
 }

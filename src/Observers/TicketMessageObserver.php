@@ -31,7 +31,7 @@ class TicketMessageObserver
     public function deleting(TicketMessage $ticketMessage)
     {
         $ticketMessage->uploads()->get()->each(fn (TicketUpload $ticketUpload) => $ticketUpload->delete());
-        Storage::disk(config('laravel-tickets.file.driver'))
-            ->deleteDirectory(config('laravel-tickets.file.path') . $ticketMessage->id);
+        Storage::disk(config('tickets.file.driver'))
+            ->deleteDirectory(config('tickets.file.path') . $ticketMessage->id);
     }
 }
