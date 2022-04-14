@@ -13,7 +13,7 @@ class CreateTicketsTable extends Migration
      */
     public function up()
     {
-        Schema::create(config('laravel-tickets.database.tickets-table'), function (Blueprint $table) {
+        Schema::create(config('laravel-tickets.tickets-table'), function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('category_id')->nullable();
@@ -25,11 +25,11 @@ class CreateTicketsTable extends Migration
 
             if (!config('laravel-tickets.models.uuid')) {
                 $table->foreign('user_id')
-                    ->on(config('laravel-tickets.database.users-table'))->references('id');
+                    ->on(config('laravel-tickets.users-table'))->references('id');
                 $table->foreign('category_id')
-                    ->on(config('laravel-tickets.database.ticket-categories-table'))->references('id');
+                    ->on(config('laravel-tickets.ticket-categories-table'))->references('id');
                 $table->foreign('label_id')
-                    ->on(config('laravel-tickets.database.ticket-labels-table'))->references('id');
+                    ->on(config('laravel-tickets.ticket-labels-table'))->references('id');
             }
         });
     }
@@ -41,6 +41,6 @@ class CreateTicketsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(config('laravel-tickets.database.tickets-table'));
+        Schema::dropIfExists(config('laravel-tickets.tickets-table'));
     }
 }

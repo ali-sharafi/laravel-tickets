@@ -25,7 +25,7 @@ class TicketUpload extends Model
 
     public function getTable()
     {
-        return config('laravel-tickets.database.ticket-uploads-table');
+        return config('laravel-tickets.ticket-uploads-table');
     }
 
     /**

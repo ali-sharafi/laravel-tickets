@@ -13,7 +13,7 @@ class CreateTicketCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create(config('laravel-tickets.database.ticket-categories-table'), function (Blueprint $table) {
+        Schema::create(config('laravel-tickets.ticket-categories-table'), function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->string('desc')->nullable();
@@ -28,6 +28,6 @@ class CreateTicketCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(config('laravel-tickets.database.ticket-categories-table'));
+        Schema::dropIfExists(config('laravel-tickets.ticket-categories-table'));
     }
 }

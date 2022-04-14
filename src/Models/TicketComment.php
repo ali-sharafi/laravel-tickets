@@ -27,7 +27,7 @@ class TicketComment extends Model
 
     public function getTable()
     {
-        return config('laravel-tickets.database.ticket-comments-table');
+        return config('laravel-tickets.ticket-comments-table');
     }
 
     /**

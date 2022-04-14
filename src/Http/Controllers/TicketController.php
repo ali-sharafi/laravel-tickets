@@ -227,7 +227,7 @@ class TicketController
         return $this->request->validate([
             'message' => [
                 'required', 'string',
-                Rule::unique(config('laravel-tickets.database.ticket-messages-table'))
+                Rule::unique(config('laravel-tickets.ticket-messages-table'))
                     ->where('user_id', $this->request->user()->id)
             ],
             'files' => ['max:' . config('laravel-tickets.file.max-files')],
@@ -258,7 +258,7 @@ class TicketController
         if (config('laravel-tickets.category')) {
             $rules['category_id'] = [
                 'required',
-                Rule::exists(config('laravel-tickets.database.ticket-categories-table'), 'id'),
+                Rule::exists(config('laravel-tickets.ticket-categories-table'), 'id'),
             ];
         }
 

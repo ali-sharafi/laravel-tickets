@@ -46,7 +46,7 @@ class TicketMessage extends Model
 
     public function getTable()
     {
-        return config('laravel-tickets.database.ticket-messages-table');
+        return config('laravel-tickets.ticket-messages-table');
     }
 
     /**

@@ -13,7 +13,7 @@ class CreateTicketReferencesTable extends Migration
      */
     public function up()
     {
-        Schema::create(config('laravel-tickets.database.ticket-references-table'), function (Blueprint $table) {
+        Schema::create(config('laravel-tickets.ticket-references-table'), function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('ticket_id');
             $table->morphs('referenceable');
@@ -21,7 +21,7 @@ class CreateTicketReferencesTable extends Migration
 
             if (! config('laravel-tickets.models.uuid')) {
                 $table->foreign('ticket_id')
-                    ->on(config('laravel-tickets.database.tickets-table'))->references('id');
+                    ->on(config('laravel-tickets.tickets-table'))->references('id');
             }
         });
     }
@@ -33,6 +33,6 @@ class CreateTicketReferencesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(config('laravel-tickets.database.ticket-references-table'));
+        Schema::dropIfExists(config('laravel-tickets.ticket-references-table'));
     }
 }

@@ -13,7 +13,7 @@ class CreateTicketCommentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ticket_comments', function (Blueprint $table) {
+        Schema::create(config('laravel-tickets.ticket-comments-table'), function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('ticket_id');
             $table->unsignedBigInteger('user_id');
@@ -22,9 +22,9 @@ class CreateTicketCommentsTable extends Migration
 
             if (!config('laravel-tickets.models.uuid')) {
                 $table->foreign('user_id')
-                    ->on(config('laravel-tickets.database.admins-table'))->references('id');
+                    ->on(config('laravel-tickets.admins-table'))->references('id');
                 $table->foreign('ticket_id')
-                    ->on(config('laravel-tickets.database.tickets-table'))->references('id');
+                    ->on(config('laravel-tickets.tickets-table'))->references('id');
             }
         });
     }
@@ -36,6 +36,6 @@ class CreateTicketCommentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ticket_comments');
+        Schema::dropIfExists(config('laravel-tickets.ticket-comments-table'));
     }
 }

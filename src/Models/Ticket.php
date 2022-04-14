@@ -37,7 +37,7 @@ class Ticket extends Model
 
     public function getTable()
     {
-        return config('laravel-tickets.database.tickets-table');
+        return config('laravel-tickets.tickets-table');
     }
 
     /**
