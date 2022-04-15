@@ -255,6 +255,11 @@ class TicketController
             ],
         ];
 
+        $messages = [
+            'category_id.required' => 'The category field is required.',
+            'category_id.exists' => 'The category is not exists.',
+        ];
+
         if (config('tickets.category')) {
             $rules['category_id'] = [
                 'required',
@@ -262,7 +267,7 @@ class TicketController
             ];
         }
 
-        return $this->request->validate($rules);
+        return $this->request->validate($rules, $messages);
     }
 
     /**
