@@ -25,7 +25,7 @@ class Vue extends Preset
     public static function updateComponent()
     {
         $origin =  __DIR__ . '/vue-stubs/*';
-        $dest = __DIR__ . '/components/';
+        $dest = resource_path('js/components');
         shell_exec(" cp -r -a $origin $dest 2>&1 ");
     }
 
