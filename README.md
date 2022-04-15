@@ -17,16 +17,16 @@ Only one version of Laravel is supported for now but this package will develop i
 ## Preview
 
 Ticket list:
-![ticket list](.github/images/TicketList.JPG)
+![ticket list](.github/images/TicketList.png)
 
 Ticket creation:
-![ticket create](.github/images/CreateTicket.JPG)
+![ticket create](.github/images/CreateTicket.png)
 
 Ticket show:
-![ticket show](.github/images/ShowTicket.JPG)
+![ticket show](.github/images/ShowTicket.png)
 
 Admin Ticket list:
-![admin ticket list](.github/images/AdminTicketList.JPG)
+![admin ticket list](.github/images/AdminTicketList.png)
 
 ### Installation
 
