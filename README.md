@@ -14,6 +14,17 @@ Only one version of Laravel is supported for now but this package will develop i
 |---- |----|
 | 1.x | 7.*
 
+## Preview
+
+Ticket list:
+![ticket list](.github/images/TicketList.JPG)
+Ticket creation:
+![ticket create](.github/images/CreateTicket.JPG)
+Ticket show:
+![ticket show](.github/images/ShowTicket.JPG)
+Admin Ticket list:
+![ticket show](.github/images/AdminTicketList.JPG)
+
 ### Installation
 
 ```bash
