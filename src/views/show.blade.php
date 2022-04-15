@@ -145,8 +145,8 @@
         </div>
     </div>
 @endsection
-@section('scripts')
-    <script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('files').addEventListener('change', fileChanged, false);
 
         function fileChanged(e) {
@@ -162,5 +162,5 @@
                 divFiles.insertAdjacentElement('beforeend', span)
             }
         }
-    </script>
-@endsection
+    });
+</script>

@@ -78,6 +78,7 @@
                             </div>
                         </div>
                     @endif
+                    <div class="col-12" id="file-names"></div>
                     <div class="col-12">
                         <button class="btn btn-primary">{{ __('tickets.create') }}</button>
                     </div>
@@ -86,14 +87,14 @@
         </div>
     </div>
 @endsection
-@section('scripts')
-    <script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('files').addEventListener('change', fileChanged, false);
 
         function fileChanged(e) {
             let files = e.target.files;
 
-            let [divFiles] = document.getElementsByClassName('custom-file');
+            let divFiles = document.getElementById('file-names');
             for (const iterator of files) {
                 const span = document.createElement('span');
                 span.innerHTML = iterator.name;
@@ -103,5 +104,5 @@
                 divFiles.insertAdjacentElement('beforeend', span)
             }
         }
-    </script>
-@endsection
+    })
+</script>
