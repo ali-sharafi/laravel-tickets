@@ -12,7 +12,7 @@ class AdminUiCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'laravel-tickets:admin-ui
+    protected $signature = 'tickets:admin-ui
                     { type : The preset type (vue) }';
 
     /**
